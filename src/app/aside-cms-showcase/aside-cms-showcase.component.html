@@ -1,0 +1,40 @@
+<div class="aside_container">
+  <div class="aside_inner_container">
+    <div class="aside_title_container">
+      <p class="aside_title side_border">
+        CMS's that matches your requirement so far
+      </p>
+    </div>
+    <p class="aside_desc">
+      Answer all the questions to see the CMS that would best match your
+      requirements
+    </p>
+
+    <!-- <div *ngFor="let key of Object.keys(radioData)">
+    <p>{{ radioData[key] }}</p>
+  </div> -->
+    <div [@list] class="aside_scroll">
+      <div *ngIf="!arrayValue || arrayValue.length === 0">
+        <div *ngFor="let img of imageData">
+          <img [@items] [src]="img.image" alt="image" class="side_view_img" />
+        </div>
+      </div>
+      <div
+        class="animationMe"
+        *ngFor="let key of arrayValue | slice : 0 : 5; let k = index"
+      >
+        <img [src]="key.image" alt="image loading" class="side_view_img" />
+      </div>
+    </div>
+    <!-- <div *ngFor="let img of this.images; let i = index">
+    <ul>
+      <li *ngIf="img.isActive">{{ img.path }}</li>
+       <li>wordpress</li>
+      <li>drupal</li>
+      <li>magento</li>
+      <li>aem</li>
+      <li>tridion</li>
+    </ul>
+  </div> -->
+  </div>
+</div>

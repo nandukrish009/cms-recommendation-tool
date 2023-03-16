@@ -1,0 +1,21 @@
+.page-not-found-container {
+  margin: 15% auto;
+  position: relative;
+  text-align: center;
+  width: 1200px;
+}
+.not_image {
+  width: 100%;
+  margin: 20px 12px;
+}
+h1.not-head {
+  font-size: 8em;
+  font-weight: 500;
+  line-height: 102px;
+  font-family: "Poppins SemiBold";
+}
+p.not-desc {
+  font-family: "Poppins";
+  font-size: 1.5em;
+  line-height: 24px;
+}

@@ -1,0 +1,552 @@
+<app-header></app-header>
+<div class="container">
+  <ul class="stepper-wrapper">
+    <li
+      class="stepper-item"
+      *ngFor="let process of timelineData"
+      [ngClass]="step >= process.order ? 'active ' : 'inactive'"
+    >
+      <div
+        class="step-counter"
+        [ngClass]="step >= process.order ? 'active ' : 'inactive'"
+        [id]="process.order"
+      >
+        <img src="{{ process.img }}" />
+      </div>
+      <div
+        class="step-name"
+        [ngClass]="step >= process.order ? 'active ' : 'inactive'"
+      >
+        {{ process.questionnaire_type }}
+      </div>
+    </li>
+  </ul>
+</div>
+<!-- <app-aside-cms-showcase [radioData]="sendData"></app-aside-cms-showcase> -->
+<div class="container">
+  <div class="recommendation-wrapper">
+    <div class="main-view">
+      <div class="left-bg">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="135"
+          height="540"
+          viewBox="0 0 135 540"
+        >
+          <path
+            id="Rectangle_2"
+            data-name="Rectangle 2"
+            d="M0,0H0A135,135,0,0,1,135,135V540a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z"
+            fill="rgba(178,20,45,0.03)"
+          />
+        </svg>
+      </div>
+
+      <div class="content">
+        <app-spinner></app-spinner>
+        <div class="general-req-container">
+          <!------------------------------------- General Requirement Form Section -------------------------------->
+          <form [formGroup]="generalForm" novalidate>
+            <input
+              type="hidden"
+              class="send_data"
+              name="send_data"
+              value="{{ getData }}"
+            />
+            <fieldset [hidden]="!(step == 1)" [ngClass]="scroll">
+              <!-- Question 1 in general requirment -->
+              <div class="question-one form-group">
+                <p class="general-title-one">General Requirement</p>
+                <div class="question_container">
+                  <div
+                    class="form_questions"
+                    *ngFor="
+                      let general of generalFormData
+                        | filter : 'stepperName' : 'general requirment';
+                      let i = index
+                    "
+                  >
+                    <div class="question-title">
+                      <p class="cms_question">
+                        {{ general.question }}
+
+                        <!-- <span
+                          *ngIf="
+                            general_req_step &&
+                            generalForm.get(general.id).errors
+                          "
+                          [ngClass]="'error'"
+                        >
+                          Please enter to continue.</span
+                        > -->
+                        <!-- <span
+                          *ngIf="
+                            general.type == 'multiple-choice' &&
+                            general_req_step &&
+                            generalForm.get(opt.id).errors
+                          "
+                          [ngClass]="'error'"
+                        >
+                          Please enter to continue.
+                        </span> -->
+                        <span
+                          *ngIf="
+                            general.type == 'single-choice' &&
+                            general_req_step &&
+                            generalForm.get(general.id).errors
+                          "
+                          [ngClass]="'error'"
+                        >
+                          Please enter to continue.
+                        </span>
+                        <span
+                          [ngClass]="'error'"
+                          *ngIf="
+                            general.type == 'multiple-choice' &&
+                            general_req_step &&
+                            generalForm.controls['checkArray'].errors
+                          "
+                        >
+                          Checkbox is required.
+                        </span>
+                      </p>
+                    </div>
+
+                    <div class="option-select-cnt">
+                      <div
+                        class="ipad_view"
+                        *ngFor="
+                          let opt of general.options;
+                          let j = index;
+                          trackBy: trackByIndex
+                        "
+                      >
+                        <div class="option-inner-cnt">
+                          <label class="label_container" for="{{ opt.id }}">
+                            <span class="radio-label">{{ opt.option }}</span>
+                            <input
+                              *ngIf="general.type == 'single-choice'"
+                              id="{{ opt.id }}"
+                              class="myCheckBoxValue"
+                              type="radio"
+                              [name]="general.id"
+                              [value]="opt.id"
+                              [formControlName]="general.id"
+                              [(ngModel)]="modelValueOne[j][i]"
+                              (change)="
+                                formValue(
+                                  $event,
+                                  modelValueOne[j][i],
+                                  general.id
+                                )
+                              "
+                              [ngClass]="{
+                                'is-invalid':
+                                  general_req_step &&
+                                  generalForm.get(general.id).errors
+                              }"
+                            />
+
+                            <input
+                              *ngIf="general.type == 'multiple-choice'"
+                              id="{{ opt.id }}"
+                              type="checkbox"
+                              [name]="opt.id"
+                              [value]="opt.value"
+                              (change)="formValue($event, opt.id, opt.value)"
+                              [(ngModel)]="modelValueOne[j][i]"
+                              [ngModelOptions]="{ standalone: true }"
+                              [ngClass]="{
+                                'is-invalid':
+                                  general_req_step &&
+                                  generalForm.controls['checkArray'].errors
+                              }"
+                            />
+                            <span class="{{ general.type }}"></span>
+                          </label>
+                        </div>
+                        <!-- <span
+                          *ngIf="
+                            general.type == 'multiple-choice' &&
+                            general_req_step &&
+                            generalForm.get(opt.id).errors
+                          "
+                          [ngClass]="'error'"
+                        >
+                          Please enter to continue.
+                        </span> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="footer-cta-cnt">
+                <button class="back-cta" routerLink="/">Back</button>
+                <button type="button" class="next-cta" (click)="next()">
+                  Next
+                </button>
+              </div>
+            </fieldset>
+          </form>
+
+          <!------------------------------------ Content Management Form Section ------------------------------------>
+          <form [formGroup]="contentForm" novalidate>
+            <fieldset [hidden]="!(step == 2)" [ngClass]="scroll">
+              <!-- Question 1 in general requirment -->
+              <div class="question-one form-group">
+                <p class="general-title-one #scroll">Content Management</p>
+                <div class="question_container">
+                  <div
+                    class="form_questions"
+                    *ngFor="
+                      let general of generalFormData
+                        | filter : 'stepperName' : 'content management';
+                      let j = index
+                    "
+                  >
+                    <div class="question-title">
+                      <p class="cms_question">
+                        {{ general.question }}
+
+                        <span
+                          *ngIf="
+                            content_managment_step &&
+                            contentForm.get(general.id).errors
+                          "
+                          [ngClass]="'error'"
+                        >
+                          Please enter to continue.</span
+                        >
+                      </p>
+                    </div>
+
+                    <div class="option-select-cnt">
+                      <div
+                        class="ipad_view"
+                        *ngFor="
+                          let opt of general.options;
+                          let i = index;
+                          trackBy: trackByIndex
+                        "
+                      >
+                        <div class="option-inner-cnt">
+                          <label class="label_container" for="{{ opt.id }}">
+                            <span class="radio-label">{{ opt.option }}</span>
+                            <input
+                              *ngIf="general.type == 'single-choice'"
+                              id="{{ opt.id }}"
+                              type="radio"
+                              [name]="general.id"
+                              [value]="opt.id"
+                              [formControlName]="general.id"
+                              [(ngModel)]="modelValueTwo[j][i]"
+                              (change)="
+                                formValue(
+                                  $event,
+                                  modelValueTwo[j][i],
+                                  general.id
+                                )
+                              "
+                              [ngClass]="{
+                                'is-invalid':
+                                  content_managment_step &&
+                                  contentForm.get(general.id).errors
+                              }"
+                            />
+                            <!-- <input
+                              *ngIf="general.type == 'multiple-choice'"
+                              id="{{ opt.id }}"
+                              type="checkbox"
+                              [name]="opt.value"
+                              [value]="opt.id"
+                              [formControlName]="opt.value"
+                              (change)="formValue($event, opt.id, opt.value)"
+                            /> -->
+                            <span class="{{ general.type }}"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="footer-cta-cnt">
+                <button type="button" class="back-cta" (click)="previous()">
+                  Back
+                </button>
+                <button type="button" class="next-cta" (click)="next()">
+                  Next
+                </button>
+              </div>
+            </fieldset>
+          </form>
+          <!------------------------------------ Marketing Form Section ------------------------------------>
+          <form [formGroup]="marketForm" novalidate>
+            <fieldset [hidden]="!(step == 3)" [ngClass]="scroll">
+              <!-- Question 1 in general requirment -->
+              <div class="question-one form-group">
+                <p class="general-title-one">Marketing</p>
+                <div class="question_container">
+                  <div
+                    class="form_questions"
+                    *ngFor="
+                      let general of generalFormData
+                        | filter : 'stepperName' : 'marketing';
+                      let i = index
+                    "
+                  >
+                    <div class="question-title">
+                      <p class="cms_question">
+                        {{ general.question }}
+                        <span
+                          *ngIf="
+                            marketing_step && marketForm.get(general.id).errors
+                          "
+                          [ngClass]="'error'"
+                        >
+                          Please enter to continue.</span
+                        >
+                      </p>
+                    </div>
+
+                    <div class="option-select-cnt">
+                      <div
+                        class="ipad_view"
+                        *ngFor="
+                          let opt of general.options;
+                          let j = index;
+                          trackBy: trackByIndex
+                        "
+                      >
+                        <div class="option-inner-cnt">
+                          <label class="label_container" for="{{ opt.id }}">
+                            <span class="radio-label">{{ opt.option }}</span>
+                            <input
+                              *ngIf="general.type == 'single-choice'"
+                              id="{{ opt.id }}"
+                              type="radio"
+                              [name]="general.id"
+                              [value]="opt.id"
+                              [formControlName]="general.id"
+                              [(ngModel)]="modelValueThree[j][i]"
+                              (change)="
+                                formValue(
+                                  $event,
+                                  modelValueThree[j][i],
+                                  general.id
+                                )
+                              "
+                              [ngClass]="{
+                                'is-invalid':
+                                  marketing_step &&
+                                  marketForm.get(general.id).errors
+                              }"
+                            />
+                            <!-- <input
+                              *ngIf="general.type == 'multiple-choice'"
+                              id="{{ opt.id }}"
+                              type="checkbox"
+                              [name]="opt.value"
+                              [value]="opt.id"
+                              [formControlName]="opt.value"
+                              (change)="formValue($event, opt.id, opt.value)"
+                            /> -->
+                            <span class="{{ general.type }}"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="footer-cta-cnt">
+                <button class="back-cta" (click)="previous()">Back</button>
+                <button class="next-cta" (click)="next()">Next</button>
+              </div>
+            </fieldset>
+          </form>
+
+          <!------------------------------------ Technical IT Form Section ------------------------------------>
+          <form [formGroup]="technicalForm" novalidate>
+            <fieldset [hidden]="!(step == 4)" [ngClass]="scroll">
+              <!-- Question 1 in general requirment -->
+              <div class="question-one form-group">
+                <p class="general-title-one">Technical - IT</p>
+                <div class="question_container">
+                  <div
+                    class="form_questions"
+                    *ngFor="
+                      let general of generalFormData
+                        | filter : 'stepperName' : 'technical it';
+                      let i = index
+                    "
+                  >
+                    <div class="question-title">
+                      <p class="cms_question">
+                        {{ general.question }}
+                        <span
+                          *ngIf="
+                            technical_it &&
+                            technicalForm.get(general.id).invalid
+                          "
+                          [ngClass]="'error'"
+                        >
+                          Please enter to continue.</span
+                        >
+                      </p>
+                    </div>
+
+                    <div class="option-select-cnt">
+                      <div
+                        class="ipad_view"
+                        *ngFor="
+                          let opt of general.options;
+                          let j = index;
+                          trackBy: trackByIndex
+                        "
+                      >
+                        <div class="option-inner-cnt">
+                          <label class="label_container" for="{{ opt.id }}">
+                            <span class="radio-label">{{ opt.option }}</span>
+                            <input
+                              *ngIf="general.type == 'single-choice'"
+                              id="{{ opt.id }}"
+                              type="radio"
+                              [name]="general.id"
+                              [value]="opt.id"
+                              [formControlName]="general.id"
+                              [(ngModel)]="modelValueFour[j][i]"
+                              (change)="
+                                formValue(
+                                  $event,
+                                  modelValueFour[j][i],
+                                  general.id
+                                )
+                              "
+                              [ngClass]="{
+                                'is-invalid':
+                                  technical_it &&
+                                  technicalForm.get(general.id).errors
+                              }"
+                            />
+                            <!-- <input
+                              *ngIf="general.type == 'multiple-choice'"
+                              id="{{ opt.id }}"
+                              type="checkbox"
+                              [name]="opt.value"
+                              [value]="opt.id"
+                              [formControlName]="opt.value"
+                              (change)="formValue($event, opt.id, opt.value)"
+                            /> -->
+                            <span class="{{ general.type }}"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="footer-cta-cnt">
+                <button class="back-cta" (click)="previous()">Back</button>
+                <button class="next-cta" (click)="next()">Next</button>
+              </div>
+            </fieldset>
+          </form>
+
+          <!------------------------------------ Technical Development Form Section ------------------------------------>
+          <form [formGroup]="developmentForm" novalidate>
+            <fieldset [hidden]="!(step == 5)" [ngClass]="scroll">
+              <!-- Question 1 in general requirment -->
+              <div class="question-one form-group">
+                <p class="general-title-one">Technical - Development</p>
+                <div class="question_container">
+                  <div
+                    class="form_questions"
+                    *ngFor="
+                      let general of generalFormData
+                        | filter : 'stepperName' : 'technical development';
+                      let i = index
+                    "
+                  >
+                    <div class="question-title">
+                      <p class="cms_question">
+                        {{ general.question }}
+                        <span
+                          *ngIf="
+                            technical_development &&
+                            developmentForm.get(general.id).invalid
+                          "
+                          [ngClass]="'error'"
+                        >
+                          Please enter to continue.</span
+                        >
+                      </p>
+                    </div>
+
+                    <div class="option-select-cnt">
+                      <div
+                        class="ipad_view"
+                        *ngFor="
+                          let opt of general.options;
+                          let j = index;
+                          trackBy: trackByIndex
+                        "
+                      >
+                        <div class="option-inner-cnt">
+                          <label class="label_container" for="{{ opt.id }}">
+                            <span class="radio-label">{{ opt.option }}</span>
+                            <input
+                              *ngIf="general.type == 'single-choice'"
+                              id="{{ opt.id }}"
+                              type="radio"
+                              [name]="general.id"
+                              [value]="opt.id"
+                              [formControlName]="general.id"
+                              [(ngModel)]="modelValueFive[j][i]"
+                              (change)="
+                                formValue(
+                                  $event,
+                                  modelValueFive[j][i],
+                                  general.id
+                                )
+                              "
+                              [ngClass]="{
+                                'is-invalid':
+                                  technical_development &&
+                                  developmentForm.get(general.id).errors
+                              }"
+                            />
+                            <!-- <input
+                              *ngIf="general.type == 'multiple-choice'"
+                              id="{{ opt.id }}"
+                              type="checkbox"
+                              [name]="opt.value"
+                              [value]="opt.id"
+                              [formControlName]="opt.value"
+                              (change)="formValue($event, opt.id, opt.value)"
+                            /> -->
+                            <span class="{{ general.type }}"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="footer-cta-cnt">
+                <button class="back-cta" (click)="previous()">Back</button>
+                <button class="next-cta" (click)="submit()">See Report</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    <app-aside-cms-showcase [arrayValue]="arrayValue"></app-aside-cms-showcase>
+  </div>
+</div>

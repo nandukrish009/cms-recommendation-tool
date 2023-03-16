@@ -1,0 +1,19 @@
+@font-face {
+    font-family: "Poppins";
+    src: local("Poppins"), url(./assets/images/poppins-semibold/Poppins-Regular.ttf) format("truetype");
+}
+@font-face {
+    font-family: "Poppins SemiBold";
+    src: local("Poppins"), url(./assets/images/poppins-semibold/Poppins-SemiBold.ttf) format("truetype");
+}
+@font-face {
+    font-family: "Poppins Bold";
+    src: local("Poppins"), url(./assets/images/poppins-semibold/Poppins-Bold.ttf) format("truetype");
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+html, body { height: auto; }
+body { margin: 0; font-family: 'Poppins'; overflow: hidden;}

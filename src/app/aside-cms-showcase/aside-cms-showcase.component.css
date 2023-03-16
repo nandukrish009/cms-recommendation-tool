@@ -1,0 +1,128 @@
+.aside_container {
+  width: 322px;
+  height: auto;
+  /* right: 0;
+  position: fixed; */
+  margin: 34px 22px 0px 0px;
+  /* border-left: 1px solid #ccc; */
+  padding: 0px 0px 0px 16px;
+  /* left: calc(100% - 342px); */
+}
+.aside_inner_container {
+  overflow: hidden;
+}
+.list-container {
+  width: 100px;
+  height: 50px;
+}
+.aside_title {
+  font-family: "Poppins SemiBold";
+  font-size: 1.5em;
+  color: black;
+  margin: 0;
+  line-height: 1.6em;
+}
+.side_border {
+  border-left: 3px solid #b2142d;
+  padding-left: 12px;
+  height: 32px;
+}
+.aside_desc {
+  font-family: "Poppins";
+  font-size: 1em;
+  margin: 16px 0px 0px 12px;
+  line-height: 1.8em;
+}
+.aside_title_container {
+  height: 52px;
+}
+.side_view_img {
+  width: 114px;
+  height: auto;
+  padding: 15px 0px 0px 0px;
+  margin-left: 12px;
+}
+.aside_scroll {
+  height: calc(100vh - 400px);
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.aside_scroll::-webkit-scrollbar {
+  display: none;
+}
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    /* transform: scale(0.5); */
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animationMe:nth-child(1) img {
+  animation: fadeInAnimation ease-in 0.25s;
+}
+.animationMe:nth-child(2) img {
+  animation: fadeInAnimation ease-in 0.35s;
+}
+.animationMe:nth-child(3) img {
+  animation: fadeInAnimation ease-in 0.45s;
+}
+.animationMe:nth-child(4) img {
+  animation: fadeInAnimation ease-in 0.55s;
+}
+.animationMe:nth-child(5) img {
+  animation: fadeInAnimation ease-in 0.65s;
+}
+
+@media (min-width: 1400px) {
+  .aside_container {
+    right: 0%;
+  }
+  .aside_inner_container {
+    height: auto;
+    overflow: auto;
+  }
+}
+@media (min-width: 1500px) {
+  .aside_container {
+    right: 3%;
+  }
+}
+@media (min-width: 1600px) {
+  .aside_container {
+    right: 6%;
+  }
+}
+@media (min-width: 1700px) {
+  .aside_container {
+    right: 8%;
+  }
+}
+
+@media (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+  .aside_container {
+    width: 275px;
+    margin: 34px 20px 0px 0px;
+    padding: 0px 0px 0px 16px;
+    border-left: none;
+  }
+  .aside_inner_container {
+    height: 690px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .aside_container {
+    border-left: none;
+  }
+  .aside_inner_container {
+    height: 500px;
+  }
+}
